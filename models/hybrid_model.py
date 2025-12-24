@@ -58,6 +58,33 @@ class HybridModel:
         )  # 15GB for runtime, 5GB for encoder
         print("{:<40} {:<10.2f}".format("Per GPU params size (GB):", params_per_gpu))
 
+    def get_weights_info(self):
+        """Get weights information as a dictionary."""
+        self.print_weights_info()
+        full_attn_params_bytes = get_attn_params_size(
+            self.config, self.args.use_fp8_gemm
+        )
+        linear_attn_params_bytes = get_linear_attn_params_size(
+            self.config, self.args.use_fp8_gemm
+        )
+        expert_params_bytes = get_expert_params_size(
+            self.config, self.args.use_fp8_gemm
+        )
+        params_per_gpu = expert_params_bytes * (
+            self.config.num_shared_experts
+            + self.config.num_routed_experts / self.args.world_size
+        )
+        params_per_gpu *= self.config.num_hidden_layers
+        params_per_gpu += self.config.num_full_attn_layers * full_attn_params_bytes
+        params_per_gpu += self.config.num_linear_attn_layers * full_attn_params_bytes
+        params_per_gpu = params_per_gpu / 1024 / 1024 / 1024
+        return {
+            "one_full_attn_params_size_mb": full_attn_params_bytes / 1024 / 1024,
+            "one_linear_attn_params_size_mb": linear_attn_params_bytes / 1024 / 1024,
+            "one_expert_params_size_mb": expert_params_bytes / 1024 / 1024,
+            "per_gpu_params_size_gb": params_per_gpu,
+        }
+
     def print_kvcache_info(self):
         print("{s:{c}^{n}}".format(s="KV Cache", n=50, c="-"))
         print("{:<40} {:<10.2f}".format("KV cache space (GB):", self.kvcache_mem))
@@ -104,6 +131,33 @@ class HybridModel:
         self.kvcache_bytes = kvcache_bytes / context_len
         self.states_bytes = states_bytes
         self.target_bs = target_bs
+
+    def get_kvcache_info(self):
+        """Get KV cache information as a dictionary."""
+        self.print_kvcache_info()
+        context_len = self.args.target_isl + self.args.target_osl
+        if self.args.decode_bs is None:
+            target_bs = math.ceil(self.args.target_tgs * self.args.target_tpot / 1000)
+        else:
+            target_bs = self.args.decode_bs
+        target_kvcache_bytes = self.kvcache_mem * 1024 * 1024 * 1024 / target_bs
+        kvcache_bytes = (
+            get_kvcache_size(self.config, self.args.use_fp8_kv)
+            / self.config.num_hidden_layers
+        )
+        kvcache_bytes *= self.config.num_full_attn_layers * context_len
+        states_bytes = get_states_size(self.config)
+        return {
+            "kv_cache_space_gb": self.kvcache_mem,
+            "input_seq_len": self.args.target_isl,
+            "output_seq_len": self.args.target_osl,
+            "target_decode_batchsize": target_bs,
+            "target_per_req_kvcache_size_mb": target_kvcache_bytes / 1024 / 1024,
+            "current_per_req_full_attn_kvcache_size_mb": kvcache_bytes / 1024 / 1024,
+            "current_per_req_states_size_mb": states_bytes / 1024 / 1024,
+            "current_per_req_cache_size_mb": (kvcache_bytes + states_bytes) / 1024 / 1024,
+            "kvcache_error": kvcache_bytes + states_bytes > target_kvcache_bytes,
+        }
 
     def print_flops_info(self):
         print("{s:{c}^{n}}".format(s="FLOPs", n=50, c="-"))
@@ -155,6 +209,27 @@ class HybridModel:
                 * self.config.num_hidden_layers,
             )
         )
+
+    def get_flops_info(self):
+        """Get FLOPs information as a dictionary."""
+        self.print_flops_info()
+        self.avg_context_len = int(self.args.target_isl + self.args.target_osl / 2)
+        attn_core_gflops, other_gflops = get_attn_gflops(
+            self.config, self.avg_context_len, absorb=True
+        )
+        moe_gflops = get_moe_gflops(self.config)
+        return {
+            "num_hidden_layers": self.config.num_hidden_layers,
+            "avg_context_len": self.avg_context_len,
+            "per_token_per_layer_full_attn_core_gflops": attn_core_gflops,
+            "per_token_per_layer_moe_ffn_gflops": moe_gflops,
+            "per_token_per_layer_others_gflops": other_gflops,
+            "per_token_full_attn_core_gflops": attn_core_gflops * self.config.num_full_attn_layers,
+            "per_token_moe_gflops": moe_gflops * self.config.num_hidden_layers,
+            "per_token_others_gflops": other_gflops * self.config.num_hidden_layers,
+            "per_token_total_gflops": (attn_core_gflops + moe_gflops + other_gflops)
+            * self.config.num_hidden_layers,
+        }
 
     def prefill(self):
         print("{s:{c}^{n}}".format(s="Prefilling", n=50, c="-"))
@@ -212,11 +287,23 @@ class HybridModel:
         ttft += 30  # for scheduler
 
         print("{:<40} {:<10.2f}".format("TTFT (ms):", ttft))
+        throughput = num_tokens / (ttft / 1000)
         print(
             "{:<40} {:<10.0f}".format(
-                "Throughput (TGS:tok/GPU/s):", num_tokens / (ttft / 1000)
+                "Throughput (TGS:tok/GPU/s):", throughput
             )
         )
+        return {
+            "max_prefill_tokens": self.args.max_prefill_tokens,
+            "comm_before_moe_ffn_us": comm_t1 * 1e6,
+            "comm_after_moe_ffn_us": comm_t2 * 1e6,
+            "ttft_ms": ttft,
+            "throughput_tgs": throughput,
+        }
+
+    def get_prefill_result(self):
+        """Get prefill simulation results as a dictionary."""
+        return self.prefill()
 
     def decoding(self):
         print("{s:{c}^{n}}".format(s="Decoding", n=50, c="-"))
@@ -271,6 +358,19 @@ class HybridModel:
         tpot += 5  # for scheduler
 
         print("{:<40} {:<10.2f}".format("TPOT (ms):", tpot))
-        print("{:<40} {:<10.0f}".format("Throughput (TGS):", num_tokens / tpot * 1000))
-        if tpot > self.args.target_tpot:
+        throughput = num_tokens / tpot * 1000
+        print("{:<40} {:<10.0f}".format("Throughput (TGS):", throughput))
+        tpot_error = tpot > self.args.target_tpot
+        if tpot_error:
             print("!Error: TPOT > SLO, need smaller GFLOPs to speedup")
+        return {
+            "comm_before_moe_ffn_us": comm_t1 * 1e6,
+            "comm_after_moe_ffn_us": comm_t2 * 1e6,
+            "tpot_ms": tpot,
+            "throughput_tgs": throughput,
+            "tpot_error": tpot_error,
+        }
+
+    def get_decode_result(self):
+        """Get decoding simulation results as a dictionary."""
+        return self.decoding()

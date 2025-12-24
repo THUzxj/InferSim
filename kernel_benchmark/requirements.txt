@@ -1,0 +1,12 @@
+torch
+pandas
+triton
+deep_gemm
+# flash_mla
+sgl_kernel
+sglang
+flashinfer-python
+
+# flashinfer 需要单独安装，根据 CUDA 和 PyTorch 版本选择：
+# pip install flashinfer-python -i https://flashinfer.ai/whl/cu124/torch2.4/
+# 或参考 https://docs.flashinfer.ai/installation.html

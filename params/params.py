@@ -85,4 +85,6 @@ def load_attn_weights_time(config: ModelConfig, use_fp8: bool, gpu: GPU):
 def load_moe_weights_time(config: ModelConfig, use_fp8: bool, gpu: GPU, num_gpus):
     size = get_expert_params_size(config, use_fp8)
     size *= config.num_routed_experts / num_gpus
+
+    print("{:<40} {:<10.2f}".format("MoE expert model size (GB):", size / 1024 / 1024 / 1024))
     return size / 1024 / 1024 / 1024 / gpu.mem_bw

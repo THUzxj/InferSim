@@ -49,11 +49,16 @@ class MHA:
             / gpu.mem_bw
         )
 
+        print("{:<40} {:<10.2f}".format(
+            "Attn memory load size (GB):", kvcache_bytes * kv_len * bs / 1024 / 1024 / 1024))
+
         print("{:<40} {:<10.2f}".format("Attn core MFU:", attn_core_mfu))
         print(
-            "{:<40} {:<10.2f}".format("Attn core latency (us):", attn_core_time * 1e6)
+            "{:<40} {:<10.2f}".format(
+                "Attn core latency (us):", attn_core_time * 1e6)
         )
-        print("{:<40} {:<10.2f}".format("KV loading latency (us):", kv_load_time * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "KV loading latency (us):", kv_load_time * 1e6))
 
         return max(attn_core_time, kv_load_time)
 
@@ -61,12 +66,14 @@ class MHA:
         qkv_proj = get_gemm_mfu_and_latency(
             m=bs,
             k=self.config.hidden_size,
-            n=(self.config.num_attention_heads + self.config.num_key_value_heads * 2)
+            n=(self.config.num_attention_heads +
+               self.config.num_key_value_heads * 2)
             * self.config.head_dim,
             device_type=device_type,
             use_fp8_gemm=self.use_fp8_gemm,
         )
-        print("{:<40} {:<10.2f}".format("QKV_proj latency (us):", qkv_proj * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "QKV_proj latency (us):", qkv_proj * 1e6))
 
         o_proj = get_gemm_mfu_and_latency(
             m=bs,
@@ -83,7 +90,8 @@ class MHA:
         attn_core_gflops = self.get_attn_core_gflops(1, seq_len)
         attn_core_mfu = get_attn_prefill_mfu(self.config, seq_len, device_type)
         attn_core_time = (
-            seq_len * attn_core_gflops / 1.8 / (gpu.fp16_tflops * 1024 * attn_core_mfu)
+            seq_len * attn_core_gflops / 1.8 /
+            (gpu.fp16_tflops * 1024 * attn_core_mfu)
         )
         kv_load_time = (
             kvcache_bytes
@@ -95,11 +103,16 @@ class MHA:
             / gpu.mem_bw
         )
 
+        print("{:<40} {:<10.2f}".format(
+            "Attn memory load size (GB):", kvcache_bytes * seq_len / 1024 / 1024 / 1024))
+
         print("{:<40} {:<10.2f}".format("Attn core MFU:", attn_core_mfu))
         print(
-            "{:<40} {:<10.2f}".format("Attn core latency (us):", attn_core_time * 1e6)
+            "{:<40} {:<10.2f}".format(
+                "Attn core latency (us):", attn_core_time * 1e6)
         )
-        print("{:<40} {:<10.2f}".format("KV loading latency (us):", kv_load_time * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "KV loading latency (us):", kv_load_time * 1e6))
 
         return max(attn_core_time, kv_load_time)
 
@@ -155,11 +168,16 @@ class MLA(MHA):
             / gpu.mem_bw
         )
 
+        print("{:<40} {:<10.2f}".format(
+            "Attn memory load size (GB):", kvcache_bytes * kv_len * bs / 1024 / 1024 / 1024))
+
         print("{:<40} {:<10.2f}".format("Attn core MFU:", attn_core_mfu))
         print(
-            "{:<40} {:<10.2f}".format("Attn core latency (us):", attn_core_time * 1e6)
+            "{:<40} {:<10.2f}".format(
+                "Attn core latency (us):", attn_core_time * 1e6)
         )
-        print("{:<40} {:<10.2f}".format("KV loading latency (us):", kv_load_time * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "KV loading latency (us):", kv_load_time * 1e6))
 
         return max(attn_core_time, kv_load_time)
 
@@ -171,7 +189,8 @@ class MLA(MHA):
             device_type=device_type,
             use_fp8_gemm=self.use_fp8_gemm,
         )
-        print("{:<40} {:<10.2f}".format("Q_down_proj latency (us):", q_down_proj * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "Q_down_proj latency (us):", q_down_proj * 1e6))
 
         q_up_proj = get_gemm_mfu_and_latency(
             m=bs,
@@ -180,7 +199,8 @@ class MLA(MHA):
             device_type=device_type,
             use_fp8_gemm=self.use_fp8_gemm,
         )
-        print("{:<40} {:<10.2f}".format("Q_up_proj latency (us):", q_up_proj * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "Q_up_proj latency (us):", q_up_proj * 1e6))
 
         kv_down_proj = get_gemm_mfu_and_latency(
             m=bs,
@@ -190,7 +210,8 @@ class MLA(MHA):
             use_fp8_gemm=self.use_fp8_gemm,
         )
         print(
-            "{:<40} {:<10.2f}".format("KV_down_proj latency (us):", kv_down_proj * 1e6)
+            "{:<40} {:<10.2f}".format(
+                "KV_down_proj latency (us):", kv_down_proj * 1e6)
         )
 
         bmm_q_wk = get_gemm_mfu_and_latency(
@@ -200,7 +221,8 @@ class MLA(MHA):
             device_type=device_type,
             use_fp8_gemm=self.use_fp8_gemm,
         )
-        print("{:<40} {:<10.2f}".format("bmm_q_wk latency (us):", bmm_q_wk * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "bmm_q_wk latency (us):", bmm_q_wk * 1e6))
 
         bmm_o_wv = get_gemm_mfu_and_latency(
             m=bs,
@@ -209,7 +231,8 @@ class MLA(MHA):
             device_type=device_type,
             use_fp8_gemm=self.use_fp8_gemm,
         )
-        print("{:<40} {:<10.2f}".format("bmm_o_wv latency (us):", bmm_o_wv * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "bmm_o_wv latency (us):", bmm_o_wv * 1e6))
 
         o_proj = get_gemm_mfu_and_latency(
             m=bs,
@@ -226,7 +249,8 @@ class MLA(MHA):
         attn_core_gflops = self.get_attn_core_gflops_noabsorb(1, seq_len)
         attn_core_mfu = get_attn_prefill_mfu(self.config, seq_len, device_type)
         attn_core_time = (
-            seq_len * attn_core_gflops / 1.8 / (gpu.fp16_tflops * 1024 * attn_core_mfu)
+            seq_len * attn_core_gflops / 1.8 /
+            (gpu.fp16_tflops * 1024 * attn_core_mfu)
         )
         kv_load_time = (
             kvcache_bytes
@@ -238,11 +262,16 @@ class MLA(MHA):
             / gpu.mem_bw
         )
 
+        print("{:<40} {:<10.2f}".format(
+            "Attn memory load size (GB):", kvcache_bytes * seq_len / 1024 / 1024 / 1024))
+
         print("{:<40} {:<10.2f}".format("Attn core MFU:", attn_core_mfu))
         print(
-            "{:<40} {:<10.2f}".format("Attn core latency (us):", attn_core_time * 1e6)
+            "{:<40} {:<10.2f}".format(
+                "Attn core latency (us):", attn_core_time * 1e6)
         )
-        print("{:<40} {:<10.2f}".format("KV loading latency (us):", kv_load_time * 1e6))
+        print("{:<40} {:<10.2f}".format(
+            "KV loading latency (us):", kv_load_time * 1e6))
 
         return max(attn_core_time, kv_load_time)
 
@@ -252,3 +281,5 @@ def create_attention(config, use_fp8_gemm, use_fp8_kv):
         return MHA(config, use_fp8_gemm, use_fp8_kv)
     elif config.attn_type == "MLA":
         return MLA(config, use_fp8_gemm, use_fp8_kv)
+    else:
+        raise ValueError(f"Unsupported attention type: {config.attn_type}")

@@ -1,0 +1,464 @@
+Running batch size: 1
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 1         
+Target per-token KV cache size (KB):     113430.40 
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  0.10      
+KV loading latency (us):                 0.67      
+QKV_proj latency (us):                   0.35      
+O_proj latency (us):                     0.23      
+Routed experts/FFN MFU:                  0.60      
+Routed experts/FFN latency (us):         1.64      
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               6.57      
+Throughput (TGS):                        152       
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size1.json
+Running batch size: 2
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 2         
+Target per-token KV cache size (KB):     56715.20  
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  0.21      
+KV loading latency (us):                 1.34      
+QKV_proj latency (us):                   0.69      
+O_proj latency (us):                     0.46      
+Routed experts/FFN MFU:                  0.60      
+Routed experts/FFN latency (us):         3.29      
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               6.62      
+Throughput (TGS):                        302       
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size2.json
+Running batch size: 3
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 3         
+Target per-token KV cache size (KB):     37810.13  
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  0.31      
+KV loading latency (us):                 2.01      
+QKV_proj latency (us):                   1.04      
+O_proj latency (us):                     0.69      
+Routed experts/FFN MFU:                  0.60      
+Routed experts/FFN latency (us):         4.93      
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               6.66      
+Throughput (TGS):                        450       
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size3.json
+Running batch size: 4
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 4         
+Target per-token KV cache size (KB):     28357.60  
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  0.42      
+KV loading latency (us):                 2.68      
+QKV_proj latency (us):                   1.38      
+O_proj latency (us):                     0.92      
+Routed experts/FFN MFU:                  0.60      
+Routed experts/FFN latency (us):         6.57      
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               6.71      
+Throughput (TGS):                        596       
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size4.json
+Running batch size: 8
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 8         
+Target per-token KV cache size (KB):     14178.80  
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  0.83      
+KV loading latency (us):                 5.36      
+QKV_proj latency (us):                   2.77      
+O_proj latency (us):                     1.85      
+Routed experts/FFN MFU:                  0.60      
+Routed experts/FFN latency (us):         13.15     
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               6.89      
+Throughput (TGS):                        1161      
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size8.json
+Running batch size: 16
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 16        
+Target per-token KV cache size (KB):     7089.40   
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  1.66      
+KV loading latency (us):                 10.73     
+QKV_proj latency (us):                   23.72     
+O_proj latency (us):                     13.67     
+Routed experts/FFN MFU:                  0.20      
+Routed experts/FFN latency (us):         77.33     
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               9.52      
+Throughput (TGS):                        1681      
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size16.json
+Running batch size: 32
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 32        
+Target per-token KV cache size (KB):     3544.70   
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  3.32      
+KV loading latency (us):                 21.46     
+QKV_proj latency (us):                   23.64     
+O_proj latency (us):                     13.62     
+Routed experts/FFN MFU:                  0.40      
+Routed experts/FFN latency (us):         78.09     
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               9.93      
+Throughput (TGS):                        3224      
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size32.json
+Running batch size: 64
+Running length: 512
+
+================ Simulator Result ================
+Device type:                             H20       
+World size:                              1         
+Attn type:                               MHA/GQA   
+Use FP8 GEMM:                            0         
+Use FP8 KV:                              0         
+------------------Model Weights-------------------
+One attn params size (MB):               50.00     
+One expert params size (MB):             142.50    
+Per GPU params size (GB):                6.77      
+---------------------KV Cache---------------------
+KV cache space (GB):                     69.23     
+Input seq len:                           512       
+Output seq len:                          128       
+Target decode batchsize:                 64        
+Target per-token KV cache size (KB):     1772.35   
+Current per-token KV cache size (KB):    144.00    
+----------------------FLOPs-----------------------
+Num hidden layers:                       36        
+Per-token per-layer attn core (GFLOPs):  0.01      
+Per-token per-layer MoE/FFN (GFLOPs):    0.15      
+Per-token per-layer others (GFLOPs):     0.05      
+Per-token attn core (GFLOPs):            0.34      
+Per-token MoE (GFLOPs):                  5.38      
+Per-token others (GFLOPs):               1.89      
+Per-token total (GFLOPs):                7.61      
+--------------------Prefilling--------------------
+Max prefill tokens:                      512       
+Attn core MFU:                           0.60      
+Attn core latency (us):                  26.24     
+KV loading latency (us):                 0.60      
+QKV_proj latency (us):                   127.12    
+O_proj latency (us):                     80.24     
+Routed experts MFU:                      0.92      
+Routed experts latency (us):             548.10    
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TTFT (ms):                               58.14     
+Throughput (TGS:tok/GPU/s):              8806      
+---------------------Decoding---------------------
+Attn core MFU:                           0.60      
+Attn core latency (us):                  6.64      
+KV loading latency (us):                 42.92     
+QKV_proj latency (us):                   24.02     
+O_proj latency (us):                     13.56     
+Routed experts/FFN MFU:                  0.80      
+Routed experts/FFN latency (us):         79.07     
+Experts loading latency (us):            42.47     
+Comm before MoE/FFN (us):                0.00      
+Comm after MoE/FFN (us):                 0.00      
+TPOT (ms):                               10.74     
+Throughput (TGS):                        5956      
+
+Results saved to qwen3-4b_experiment/input_length512_batch_size64.json
